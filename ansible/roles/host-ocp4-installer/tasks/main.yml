@@ -4,17 +4,27 @@
 - name: Generate install_config.yaml
   import_tasks: generate_install_config.yml
 
-- name: Create deployinprogress file
-  file:
-    path: /tmp/deployinprogress
-    state: touch
+- name: Installation and getting the logs.
+  block:
+  - name: Run the installer
+    become: no
+    tags:
+      - run_installer
+    command: openshift-install create cluster --dir=/home/{{ ansible_user }}/{{ cluster_name }}
+    async: "{{ 2 * 60 * 60 }}"
 
-- name: Run the installer
-  become: no
-  tags:
-  - run_installer
-  command: openshift-install create cluster --dir=/home/{{ ansible_user }}/{{ cluster_name }}
-  async: "{{ 2 * 60 * 60 }}"
+  always:
+  - name: Gzip Install log
+    archive:
+      path: /home/{{ ansible_user }}/{{ cluster_name }}/.openshift_install.log
+      dest: /home/{{ ansible_user }}/{{ cluster_name }}/.openshift_install.log.gz
+      format: gz
+
+  - name: Get Install log
+    fetch:
+      src: /home/{{ ansible_user }}/{{ cluster_name }}/.openshift_install.log.gz
+      dest: "{{ output_dir }}/{{ env_type }}_{{ guid }}_log/"
+      flat: yes
 
 - name: Fetch kube config
   fetch:
@@ -64,10 +74,10 @@
       owner: "{{ student_name }}"
       mode: 0700
 
-  - name: Copy /home/{{ remote_user }}/{{ cluster_name }}/auth/kubeconfig to /home/{{ student_name }}/.kube
+  - name: Copy /home/{{ ansible_user }}/{{ cluster_name }}/auth/kubeconfig to /home/{{ student_name }}/.kube
     become: yes
     copy:
-      src: /home/{{ remote_user }}/{{ cluster_name }}/auth/kubeconfig
+      src: /home/{{ ansible_user }}/{{ cluster_name }}/auth/kubeconfig
       dest: /home/{{ student_name }}/.kube/config
       remote_src: yes
       owner: "{{ student_name }}"
@@ -79,11 +89,6 @@
 
 - name: Gather and Print cluster info
   import_tasks: print_cluster_info.yml
-
-- name: Delete deployinprogress lock file
-  file:
-    path: /tmp/deployinprogress
-    state: absent
 
 ## Open the port for the api
 - name: OpenStack specific requirement - attach floating_ip_address to ingress port
