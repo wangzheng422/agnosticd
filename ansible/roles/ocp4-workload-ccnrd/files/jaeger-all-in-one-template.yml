@@ -95,7 +95,7 @@ objects:
             - env:
               - name: COLLECTOR_ZIPKIN_HTTP_PORT
                 value: "9411"
-              image: jaegertracing/all-in-one:${IMAGE_VERSION}
+              image: {{ wzh_registry_server }}/docker.io/jaegertracing/all-in-one:${IMAGE_VERSION}
               name: ${JAEGER_SERVICE_NAME}
               args: ["--memory.max-traces=${MAX_TRACES}"]
               ports:

@@ -464,7 +464,7 @@ spec:
       serviceAccountName: kafka-controller-manager
       containers:
       - name: manager
-        image: gcr.io/knative-releases/knative.dev/eventing-contrib/kafka/source/cmd/controller@sha256:5deaf9b0c408607d22ff1dc6d43d3c6c1a34dbe5465e6cd5ffdf4e9abf7250a7
+        image: {{ wzh_registry_server }}/gcr.io/knative-releases/knative.dev/eventing-contrib/kafka/source/cmd/controller@sha256:5deaf9b0c408607d22ff1dc6d43d3c6c1a34dbe5465e6cd5ffdf4e9abf7250a7
         env:
         - name: SYSTEM_NAMESPACE
           valueFrom:
@@ -477,7 +477,7 @@ spec:
         - name: CONFIG_LEADERELECTION_NAME
           value: config-leader-election-kafka
         - name: KAFKA_RA_IMAGE
-          value: gcr.io/knative-releases/knative.dev/eventing-contrib/kafka/source/cmd/receive_adapter@sha256:4f04b912b80ab1da0ef81a31461a270bc583adeed84339e1d7df496b7172f559
+          value: {{ wzh_registry_server }}/gcr.io/knative-releases/knative.dev/eventing-contrib/kafka/source/cmd/receive_adapter@sha256:4f04b912b80ab1da0ef81a31461a270bc583adeed84339e1d7df496b7172f559
         volumeMounts:
         resources:
           requests:
