@@ -38,6 +38,8 @@ GUID=b5c8
 USER_COUNT=100
 MODULE_TYPE=m1
 SSH_KEY=~/.ssh/id_rsa
+WZH_REGISTRY_SERVER=registry.redhat.ren:5443
+WZH_GOGS_SERVER=gogs.redhat.ren:10080
 
 # a TARGET_HOST is specified in the command line, without using an inventory file
 ansible-playbook -i ${TARGET_HOST}, ./configs/ocp-workloads/ocp-workload.yml \
@@ -49,6 +51,8 @@ ansible-playbook -i ${TARGET_HOST}, ./configs/ocp-workloads/ocp-workload.yml \
     -e"guid=${GUID}" \
     -e"user_count=${USER_COUNT}" \
     -e"module_type=${MODULE_TYPE}" \
+    -e"wzh_registry_server=${WZH_REGISTRY_SERVER}" \
+    -e"wzh_gogs_server=${WZH_GOGS_SERVER}"
     -vvvv \
     -e"ACTION=create"
 ----
