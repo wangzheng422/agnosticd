@@ -24,7 +24,7 @@
 - name: delete templates from openshift namespace
   command: oc delete -n openshift -f -
   args:
-    stdin: "{{ lookup('file', item) }}"
+    stdin: "{{ lookup('template', item) }}"
   loop:
     - ./files/coolstore-monolith-binary-build-template.yaml
     - ./files/coolstore-monolith-pipeline-build-template.yaml

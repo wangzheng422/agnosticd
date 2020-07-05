@@ -8,5 +8,5 @@ spec:
   channel: dev-preview
   installPlanApproval: Automatic
   name: openshift-pipelines-operator
-  source: community-operators
+  source: community-operator-catalog
   sourceNamespace: openshift-marketplace

@@ -3,7 +3,7 @@
 - name: Deploy RHAMT
   shell: oc process -f - | oc create -n labs-infra  -f -
   args:
-    stdin: "{{ lookup('file', './files/rhamt-template.yaml') }}"
+    stdin: "{{ lookup('template', './files/rhamt-template.yaml') }}"
 
 - name: TODO - scale RHAMT executor to quarter the number of users
   shell: |

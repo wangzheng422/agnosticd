@@ -40,7 +40,7 @@
 - name: deploy templates to openshift namespace
   command: oc replace --force -n openshift -f -
   args:
-    stdin: "{{ lookup('file', item) }}"
+    stdin: "{{ lookup('template', item) }}"
   loop:
     - ./files/coolstore-monolith-binary-build-template.yaml
     - ./files/coolstore-monolith-pipeline-build-template.yaml
@@ -54,7 +54,7 @@
     merge_type:
     - strategic-merge
     - merge
-    definition: "{{ lookup('file', item ) | from_yaml }}"
+    definition: "{{ lookup('template', item ) | from_yaml }}"
   loop:
   - ./files/sso74-image-stream.yaml
 
