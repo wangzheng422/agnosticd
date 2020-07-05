@@ -11,7 +11,7 @@ spec:
     devfileRegistryImage: ''
     pluginRegistryImage: ''
     tlsSupport: true
-    selfSignedCert: false
+    selfSignedCert: true
     serverMemoryRequest: '2Gi'
     serverMemoryLimit: '6Gi'
     customCheProperties:
