@@ -1,63 +1,10 @@
 ---
 # gogs pvc
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: pvc-gogs-github
-  annotations:
-    volume.beta.kubernetes.io/storage-class: nfs-storage-provisioner
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 10Gi
+
 
 ---
 # gogs deploy
-kind: Deployment
-apiVersion: apps/v1
-metadata:
-  annotations:
-  name: gogs-github
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: gogs-github
-  template:
-    metadata:
-      labels:
-        app: gogs-github  
-    spec:
-      restartPolicy: Always
-      initContainers:
-        - name: gogs-github-init  
-          image: >- 
-            registry.redhat.ren:5443/docker.io/wangzheng422/centos:centos7-test
-          env:
-            - name: key
-              value: value
-          command: ["/bin/bash", "-c", "--" ]
-          args: [ "trap : TERM INT; sleep infinity & wait" ]
-          imagePullPolicy: Always
-          volumeMounts:
-            - mountPath: /data
-              name: pvc-demo 
-      containers:
-        - name: gogs-github  
-          image: >- 
-            registry.redhat.ren:5443/docker.io/gogs/gogs:latest
-          env:
-            - name: key
-              value: value
-          volumeMounts:
-            - mountPath: /data
-              name: pvc-demo 
-      volumes:
-        - name: pvc-demo 
-          persistentVolumeClaim:
-            claimName: pvc-gogs-github
+
 ---
 # gogs service
 
@@ -86,15 +33,64 @@ spec:
 
 ---
 # etherpad deploy
-
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+  name: etherpad
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etherpad
+  template:
+    metadata:
+      labels:
+        app: etherpad
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: etherpad
+          image: >- 
+            {{ wzh_registry_server }}/docker.io/gogs/gogs:latest
+          env:
+            - name: key
+              value: value
+          volumeMounts:
+            - mountPath: /opt/etherpad-lite/var
+              name: pvc-demo 
+      volumes:
+        - name: pvc-demo 
+          persistentVolumeClaim:
+            claimName: pvc-etherpad
 
 
 --- 
 # etherpad service
-
+apiVersion: v1
+kind: Service
+metadata:
+  name: etherpad-service
+spec:
+  selector:
+    app: etherpad
+  ports:
+    - port: 9001
+      protocol: TCP
+      targetPort: 9001
 
 ---
 # etherpad route
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: etherpad
+spec:
+  to:
+    kind: Service
+    name: etherpad-service
+  port:
+    targetPort: 9001
 
 
 ---
