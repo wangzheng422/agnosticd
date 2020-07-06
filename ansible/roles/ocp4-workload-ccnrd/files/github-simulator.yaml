@@ -1,0 +1,113 @@
+---
+# gogs pvc
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-gogs-github
+  annotations:
+    volume.beta.kubernetes.io/storage-class: nfs-storage-provisioner
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+# gogs deploy
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+  name: gogs-github
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gogs-github
+  template:
+    metadata:
+      labels:
+        app: gogs-github  
+    spec:
+      restartPolicy: Always
+      initContainers:
+        - name: gogs-github-init  
+          image: >- 
+            registry.redhat.ren:5443/docker.io/wangzheng422/centos:centos7-test
+          env:
+            - name: key
+              value: value
+          command: ["/bin/bash", "-c", "--" ]
+          args: [ "trap : TERM INT; sleep infinity & wait" ]
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /data
+              name: pvc-demo 
+      containers:
+        - name: gogs-github  
+          image: >- 
+            registry.redhat.ren:5443/docker.io/gogs/gogs:latest
+          env:
+            - name: key
+              value: value
+          volumeMounts:
+            - mountPath: /data
+              name: pvc-demo 
+      volumes:
+        - name: pvc-demo 
+          persistentVolumeClaim:
+            claimName: pvc-gogs-github
+---
+# gogs service
+
+
+---
+# gogs route
+
+
+---
+# etherpad pvc
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-etherpad
+  annotations:
+    volume.beta.kubernetes.io/storage-class: nfs-storage-provisioner
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+
+
+
+---
+# etherpad deploy
+
+
+
+--- 
+# etherpad service
+
+
+---
+# etherpad route
+
+
+---
+# nexus pvc
+
+
+---
+# nexus deploy
+
+
+---
+# nexus service
+
+
+---
+# nexus route

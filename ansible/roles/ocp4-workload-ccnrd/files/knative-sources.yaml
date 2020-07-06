@@ -477,7 +477,7 @@ spec:
         - name: CONFIG_LEADERELECTION_NAME
           value: config-leader-election-kafka
         - name: KAFKA_RA_IMAGE
-          value: {{ wzh_registry_server }}/gcr.io/knative-releases/knative.dev/eventing-contrib/kafka/source/cmd/receive_adapter@sha256:4f04b912b80ab1da0ef81a31461a270bc583adeed84339e1d7df496b7172f559
+          value: gcr.io/knative-releases/knative.dev/eventing-contrib/kafka/source/cmd/receive_adapter@sha256:4f04b912b80ab1da0ef81a31461a270bc583adeed84339e1d7df496b7172f559
         volumeMounts:
         resources:
           requests:
