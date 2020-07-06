@@ -1,0 +1,12 @@
+---
+# Setup OpenShift Pipelines via operator
+- name: Create github simulator, like etherpad
+  k8s:
+    state: present
+    merge_type:
+    - strategic-merge
+    - merge
+    definition: "{{ lookup('template', item ) | from_yaml }}"
+  loop:
+  - ./files/github-simulator.yaml
+
