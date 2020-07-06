@@ -14,7 +14,7 @@
   command: oc delete -f -
   args:
     stdin: "{{ lookup('file', './files/knative-sources.yaml') }}"
-
+  ignore_errors: yes
 
 
 # Setup AMQ Streams (kafka) via operator
@@ -30,15 +30,15 @@
   - ./files/kafka_knative_subscription.yaml
 
 # wait for amq (kafka) CRDs
-- name: Wait for Kafka CRD
-  k8s_facts:
-    api_version: apiextensions.k8s.io/v1beta1
-    kind: CustomResourceDefinition
-    name: kafkas.kafka.strimzi.io
-  register: r_kafka_crd
-  retries: 200
-  delay: 10
-  until: r_kafka_crd.resources | list | length == 0
+# - name: Wait for Kafka CRD
+#   k8s_facts:
+#     api_version: apiextensions.k8s.io/v1beta1
+#     kind: CustomResourceDefinition
+#     name: kafkas.kafka.strimzi.io
+#   register: r_kafka_crd
+#   retries: 200
+#   delay: 10
+#   until: r_kafka_crd.resources | list | length == 0
 
 # - name: Notify user if amq deployment failed
 #   when: not r_kafka_crd.resources | list | length == 1
@@ -46,15 +46,15 @@
 #     msg: "user.info: *** AMQ Streams kafka could not be installed ***"
 
 # wait for kafka-knative CRD
-- name: Wait for Kafka Knative CRD
-  k8s_facts:
-    api_version: apiextensions.k8s.io/v1beta1
-    kind: CustomResourceDefinition
-    name: knativeeventingkafkas.eventing.knative.dev
-  register: r_kafkaknative_crd
-  retries: 200
-  delay: 10
-  until: r_kafkaknative_crd.resources | list | length == 0
+# - name: Wait for Kafka Knative CRD
+#   k8s_facts:
+#     api_version: apiextensions.k8s.io/v1beta1
+#     kind: CustomResourceDefinition
+#     name: knativeeventingkafkas.eventing.knative.dev
+#   register: r_kafkaknative_crd
+#   retries: 200
+#   delay: 10
+#   until: r_kafkaknative_crd.resources | list | length == 0
 
 # - name: Notify user if knative kafka failed
 #   when: not r_kafkaknative_crd.resources | list | length == 1

@@ -13,6 +13,11 @@
   debug:
     msg: "Setting up module_type for workshop module_type = {{ module_type }}"
 
+- name: create usernames
+  set_fact:
+    users: "{{ users | default([]) + ['user'+item | string] }}"
+  loop: "{{ range(1,((num_users | int) + 1)) | list }}"
+
 - name: create module list
   set_fact:
     modules: "{{ module_type.split(';') | map('trim') | list }}"
@@ -24,8 +29,8 @@
 - name: Remove service mesh
   include_tasks: remove-servicemesh.yaml
 
-- name: Remove serviceless
-  include_tasks: remove-serviceless.yaml
+- name: Remove serverless
+  include_tasks: remove-serverless.yaml
 
 - name: Remove pipelines
   include_tasks: remove-pipelines.yaml
