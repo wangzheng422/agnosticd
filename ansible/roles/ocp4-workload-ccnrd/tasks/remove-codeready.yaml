@@ -1,7 +1,7 @@
 ---
 
 # deploy codeready CR
-- name: Create CR for CodeReady
+- name: remove CR for CodeReady
   k8s:
     state: absent
     merge_type:
@@ -13,7 +13,7 @@
 
 
 # deploy codeready operator
-- name: Create operator subscription for CodeReady
+- name: remove operator subscription for CodeReady
   k8s:
     state: absent
     merge_type:
