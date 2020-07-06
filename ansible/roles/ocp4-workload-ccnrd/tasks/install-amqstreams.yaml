@@ -46,7 +46,7 @@
 - name: install knative-sources
   command: oc apply -f -
   args:
-    stdin: "{{ lookup('template', './files/knative-sources.yaml') }}"
+    stdin: "{{ lookup('file', './files/knative-sources.yaml') }}"
 
 - name: Install kafka in knative-eventing namespace
   k8s:
