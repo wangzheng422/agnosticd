@@ -26,3 +26,13 @@ spec:
       kind: DockerImage
       name: {{ wzh_registry_server }}/quay.io/openshiftlabs/cloudnative-workspaces-quarkus:2.1
     name: "2.1"
+  - annotations:
+      description: Quarkus stack for Java and CodeReady Workspaces
+      iconClass: icon-java
+      supports: java
+      tags: builder,java
+      version: "wzh"
+    from:
+      kind: DockerImage
+      name: {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:2020.07.06
+    name: "wzh"
