@@ -34,5 +34,5 @@ spec:
       version: "wzh"
     from:
       kind: DockerImage
-      name: {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:2020-07-06
+      name: {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:2020-07-07
     name: "wzh"
