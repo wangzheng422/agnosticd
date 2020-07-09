@@ -14,3 +14,15 @@
     oc adm policy add-scc-to-user anyuid -z default -n {{ name }}
     oc adm policy add-scc-to-user privileged -z default -n {{ name }}
     oc adm policy add-role-to-user admin {{ user }} -n {{ name }}
+
+- name: import image-stream to {{ name }} namespace
+  k8s:
+    state: present
+    namespace: {{ name }}
+    merge_type:
+    - strategic-merge
+    - merge
+    definition: "{{ lookup('template', item ) | from_yaml }}"
+  loop:
+  - ./files/openjdk-11-image stream.yaml
+  
