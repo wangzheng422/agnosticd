@@ -31,8 +31,8 @@ spec:
       iconClass: icon-java
       supports: java
       tags: builder,java
-      version: "wzh3"
+      version: "wzh7"
     from:
       kind: DockerImage
-      name: {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:2020-07-08-1594213447
-    name: "wzh3"
+      name: {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:2020-07-09-1594298495
+    name: "wzh7"
