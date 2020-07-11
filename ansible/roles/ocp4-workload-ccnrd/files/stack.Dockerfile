@@ -25,6 +25,8 @@ RUN wget -O /tmp/graalvm.tar.gz https://github.com/graalvm/graalvm-ce-builds/rel
 
 USER jboss
 
+RUN rm -rf /home/jboss/.m2
+
 RUN mkdir /home/jboss/.m2
 
 COPY settings.xml /home/jboss/.m2
