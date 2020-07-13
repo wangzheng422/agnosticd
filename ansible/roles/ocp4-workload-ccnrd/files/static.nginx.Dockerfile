@@ -1,7 +1,9 @@
 FROM registry.redhat.io/rhscl/nginx-114-rhel7:latest
 
-RUN yum install -y wget
+USER root
+RUN yum -y install wget
 
+USER 1001
 RUN cd /usr/share/nginx/html
 
 RUN mkdir -p bootstrap/3.3.5/css/
