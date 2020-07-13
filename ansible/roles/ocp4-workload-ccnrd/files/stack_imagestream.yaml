@@ -36,13 +36,3 @@ spec:
       kind: DockerImage
       name: {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:2020-07-09-1594298495
     name: "wzh7"
-  - annotations:
-      description: Quarkus stack for Java and CodeReady Workspaces
-      iconClass: icon-java
-      supports: java
-      tags: builder,java
-      version: "static-html"
-    from:
-      kind: DockerImage
-      name: {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:static-html-2020-07-13-0427
-    name: "static-html"

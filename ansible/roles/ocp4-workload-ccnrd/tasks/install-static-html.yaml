@@ -9,10 +9,9 @@
 - name: deploy static-html
   when: r_static-html.resources | list | length == 0
   shell: >
-    oc -n labs-infra new-app {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:static-html-2020-07-13-0427 --name=static-html
-    -e NGINX_PORT=8080
+    oc -n labs-infra new-app {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:static-html-2020-07-13-0601 --name=static-html
     
-- name: create the Route for static-html
+- name: create the Route maxcdn.bootstrapcdn.com for static-html
   when: r_static-html.resources | list | length == 0
   k8s:
     api_version: route.openshift.io/v1
@@ -21,15 +20,41 @@
     kind: Route
     definition:
       metadata:
-        name: static-html
+        name: static-html-bootstrapcdn
         labels:
-          app: static-html
+          app: static-html-bootstrapcdn
       spec:
-        host: ''
+        host: 'maxcdn.bootstrapcdn.com'
         to:
           kind: Service
           name: static-html
           weight: 100
         port:
           targetPort: 8080-tcp
+        tls:
+          termination: edge          
+  register: Route
+
+- name: create the Route ajax.googleapis.com for static-html
+  when: r_static-html.resources | list | length == 0
+  k8s:
+    api_version: route.openshift.io/v1
+    namespace: labs-infra
+    state: present
+    kind: Route
+    definition:
+      metadata:
+        name: static-html-googleapis
+        labels:
+          app: static-html-googleapis
+      spec:
+        host: 'ajax.googleapis.com'
+        to:
+          kind: Service
+          name: static-html
+          weight: 100
+        port:
+          targetPort: 8080-tcp
+        tls:
+          termination: edge
   register: Route
