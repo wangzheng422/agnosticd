@@ -1,7 +1,6 @@
-FROM docker.io/library/nginx
+FROM registry.redhat.io/rhscl/nginx-114-rhel7:latest
 
-RUN apt-get -y update
-RUN apt-get -y install wget
+RUN yum install -y wget
 
 RUN cd /usr/share/nginx/html
 

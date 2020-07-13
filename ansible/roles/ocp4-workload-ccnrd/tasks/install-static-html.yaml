@@ -1,0 +1,35 @@
+---
+- name: search for static-html
+  k8s_facts:
+    kind: DeploymentConfig
+    name: static-html
+    namespace: labs-infra
+  register: r_static-html
+
+- name: deploy static-html
+  when: r_static-html.resources | list | length == 0
+  shell: >
+    oc -n labs-infra new-app {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:static-html-2020-07-13-0427 --name=static-html
+    -e NGINX_PORT=8080
+    
+- name: create the Route for static-html
+  when: r_static-html.resources | list | length == 0
+  k8s:
+    api_version: route.openshift.io/v1
+    namespace: labs-infra
+    state: present
+    kind: Route
+    definition:
+      metadata:
+        name: static-html
+        labels:
+          app: static-html
+      spec:
+        host: ''
+        to:
+          kind: Service
+          name: static-html
+          weight: 100
+        port:
+          targetPort: 8080-tcp
+  register: Route
