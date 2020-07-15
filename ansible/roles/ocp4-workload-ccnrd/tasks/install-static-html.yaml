@@ -9,7 +9,7 @@
 - name: deploy static-html
   when: r_static-html.resources | list | length == 0
   shell: >
-    oc -n labs-infra new-app {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:static-html-2020-07-14-0345 --name=static-html
+    oc -n labs-infra new-app {{ wzh_registry_server }}/docker.io/wangzheng422/cloudnative-workspaces-quarkus:static-html-2020-07-15-0937 --name=static-html
     
 - name: create the Route maxcdn.bootstrapcdn.com for static-html
   when: r_static-html.resources | list | length == 0
@@ -32,7 +32,8 @@
         port:
           targetPort: 8080-tcp
         tls:
-          termination: edge          
+          termination: edge
+          insecureEdgeTerminationPolicy: Allow          
   register: Route
 
 - name: create the Route ajax.googleapis.com for static-html
@@ -57,6 +58,7 @@
           targetPort: 8080-tcp
         tls:
           termination: edge
+          insecureEdgeTerminationPolicy: Allow
   register: Route
 
 - name: create the Route at.alicdn.com for static-html
@@ -81,4 +83,56 @@
           targetPort: 8080-tcp
         tls:
           termination: edge
+          insecureEdgeTerminationPolicy: Allow
   register: Route
+
+- name: create the Route cdnjs.cloudflare.com for static-html
+  when: r_static-html.resources | list | length == 0
+  k8s:
+    api_version: route.openshift.io/v1
+    namespace: labs-infra
+    state: present
+    kind: Route
+    definition:
+      metadata:
+        name: static-html-cloudflare
+        labels:
+          app: static-html-cloudflare
+      spec:
+        host: 'cdnjs.cloudflare.com'
+        to:
+          kind: Service
+          name: static-html
+          weight: 100
+        port:
+          targetPort: 8080-tcp
+        tls:
+          termination: edge
+          insecureEdgeTerminationPolicy: Allow
+  register: Route
+
+- name: create the Route code.jquery.com for static-html
+  when: r_static-html.resources | list | length == 0
+  k8s:
+    api_version: route.openshift.io/v1
+    namespace: labs-infra
+    state: present
+    kind: Route
+    definition:
+      metadata:
+        name: static-html-jquery
+        labels:
+          app: static-html-jquery
+      spec:
+        host: 'code.jquery.com'
+        to:
+          kind: Service
+          name: static-html
+          weight: 100
+        port:
+          targetPort: 8080-tcp
+        tls:
+          termination: edge
+          insecureEdgeTerminationPolicy: Allow
+  register: Route
+

@@ -24,5 +24,6 @@
     - merge
     definition: "{{ lookup('template', item ) | from_yaml }}"
   loop:
-  - ./files/openjdk-11-image stream.yaml
+  - ./files/openjdk-11-image-stream.yaml
+  - ./files/datagrid-image-stream.yaml
   
