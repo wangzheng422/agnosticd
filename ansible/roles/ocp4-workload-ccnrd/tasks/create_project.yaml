@@ -27,4 +27,5 @@
   - ./files/openjdk-11-image-stream.yaml
   - ./files/datagrid-image-stream.yaml
   - ./files/mongo-image-stream.yaml
+  - ./files/nodejs-10-image-stream.yaml
   
