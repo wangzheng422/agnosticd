@@ -1,0 +1,15 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: mongo
+spec:
+  tags:
+    - name: '4.0'
+      from:
+        kind: DockerImage
+        name: >-
+          {{ wzh_registry_server }}/docker.io/library/mongo:4.0
+
+
+
+          
