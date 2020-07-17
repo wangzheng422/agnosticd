@@ -27,5 +27,6 @@
   - ./files/openjdk-11-image-stream.yaml
   - ./files/datagrid-image-stream.yaml
   - ./files/mongo-image-stream.yaml
+  - ./files/ubi-quarkus-native-binary-s2i-image-stream.yaml
   
   
