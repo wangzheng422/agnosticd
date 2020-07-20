@@ -2,6 +2,7 @@ kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
   name: mongo
+  namespace: {{ name }}
 spec:
   tags:
     - name: '4.0'

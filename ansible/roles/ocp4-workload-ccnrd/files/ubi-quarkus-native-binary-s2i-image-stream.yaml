@@ -2,6 +2,7 @@ kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
   name: ubi-quarkus-native-binary-s2i
+  namespace: {{ name }}
   labels:
     app.openshift.io/runtime: quarkus
 spec:

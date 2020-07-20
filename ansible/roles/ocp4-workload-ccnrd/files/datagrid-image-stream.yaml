@@ -2,6 +2,7 @@ kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
   name: infinispan-server
+  namespace: {{ name }}
 spec:
   tags:
     - name: '10.0.0.Beta3'
