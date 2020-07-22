@@ -26,23 +26,23 @@
   debug:
     msg: "selected modules list: {{ modules }}"
 
-- name: Remove service mesh
-  include_tasks: remove-servicemesh.yaml
+# - name: Remove service mesh
+#   include_tasks: remove-servicemesh.yaml
 
-- name: Remove serverless
-  include_tasks: remove-serverless.yaml
+# - name: Remove serverless
+#   include_tasks: remove-serverless.yaml
 
-- name: Remove pipelines
-  include_tasks: remove-pipelines.yaml
+# - name: Remove pipelines
+#   include_tasks: remove-pipelines.yaml
 
-- name: Remove jaeger
-  include_tasks: remove-jaeger.yaml
+# - name: Remove jaeger
+#   include_tasks: remove-jaeger.yaml
 
-- name: Remove codeready
-  include_tasks: remove-codeready.yaml
+# - name: Remove codeready
+#   include_tasks: remove-codeready.yaml
 
-- name: Remove amqstreams
-  include_tasks: remove-amqstreams.yaml
+# - name: Remove amqstreams
+#   include_tasks: remove-amqstreams.yaml
 
 - name: delete templates from openshift namespace
   command: oc delete -n openshift -f -
@@ -60,6 +60,12 @@
     users: "{{ users | default([]) + ['user'+item | string] }}"
   loop: "{{ range(1,((num_users | int) + 1)) | list }}"
 
+- name: remove the knative service
+  shell: >
+    oc delete -n {{ item }}-cloudnativeapps service.serving.knative.dev --all
+  with_list: "{{ users }}"
+  ignore_errors: yes
+
 - name: remove the user Projects
   shell: >
     oc delete project {{ item }}-inventory {{ item }}-catalog 
@@ -69,6 +75,12 @@
 - name: remove the user Projects
   shell: >
     oc delete project {{ item }}-cloudnativeapps {{ item }}-cloudnative-pipeline {{ item }}-istio-system {{ item }}-bookinfo
+  with_list: "{{ users }}"
+  ignore_errors: yes
+
+- name: remove the user Projects
+  shell: >
+    oc delete project {{ item }}-coolstore-dev {{ item }}-coolstore-prod  {{ item }}-monitoring  {{ item }}-rhsso
   with_list: "{{ users }}"
   ignore_errors: yes
 
@@ -83,9 +95,9 @@
   loop:
     - jenkins
     - labs-infra
-    - knative-serving
-    - knaitve-sources
-    - knative-eventing
+    # - knative-serving
+    # - knaitve-sources
+    # - knative-eventing
   ignore_errors: yes
 
 # Leave this as the last task in the playbook.

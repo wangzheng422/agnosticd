@@ -18,11 +18,15 @@
 - name: import image-stream to {{ name }} namespace
   k8s:
     state: present
-    namespace: {{ name }}
     merge_type:
     - strategic-merge
     - merge
-    definition: "{{ lookup('template', item ) | from_yaml }}"
+    definition: "{{ lookup('template', item_is ) | from_yaml }}"
   loop:
-  - ./files/openjdk-11-image stream.yaml
+  - ./files/openjdk-11-image-stream.yaml
+  - ./files/datagrid-image-stream.yaml
+  - ./files/mongo-image-stream.yaml
+  - ./files/ubi-quarkus-native-binary-s2i-image-stream.yaml
+  loop_control:
+    loop_var: item_is
   
