@@ -202,6 +202,9 @@
 - name: install username distribution
   include_tasks: install-username-distribution.yaml
 
+- name: install static html
+  include_tasks: install-static-html.yaml
+
 # Install CodeReady Workspaces
 - name: see if codeready is installed
   k8s_facts:
