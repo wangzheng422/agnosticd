@@ -32,8 +32,8 @@
   delay: 10
   until:
     - r_hello_openshift_deployment.resources | length | int > 0
-    - r_hello_openshift_deployment.resources[0].status.availableReplicas is defined
-    - r_hello_openshift_deployment.resources[0].status.availableReplicas | int == r_hello_openshift_deployment.resources[0].spec.readyReplicas | int
+    - r_hello_openshift_deployment.resources[0].status.readyReplicas is defined
+    - r_hello_openshift_deployment.resources[0].status.readyReplicas | int == r_hello_openshift_deployment.resources[0].spec.readyReplicas | int
 
 - name: get route by querying the OpenShift API
   k8s_info:
@@ -43,13 +43,12 @@
     namespace: "{{ ocp4_workload_example_shared_cluster_project_name }}"
   register: r_app_route
 
-- name: notify user of route with "user.info " in logs.  CloudForms will see this and send email to users
+- name: Notify user of route. CloudForms will see this and send email to users
   agnosticd_user_info:
     msg: "{{ item }}"
   loop:
     - ""
     - "Use the following route to access your application {{ r_app_route.resources[0].spec.host }}"
-    - ""
 
 # Leave this as the last task in the playbook.
 # --------------------------------------------
@@ -57,4 +56,3 @@
   debug:
     msg: "Workload Tasks completed successfully."
   when: not silent|bool
-

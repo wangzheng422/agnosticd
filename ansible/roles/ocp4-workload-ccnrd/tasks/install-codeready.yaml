@@ -70,16 +70,6 @@
   debug:
     msg: "codeready keycloak admin password: {{ codeready_sso_admin_password }}"
 
-- name: enable script upload
-  command: oc set env -n labs-infra deployment/keycloak JAVA_OPTS_APPEND="-Dkeycloak.profile.feature.scripts=enabled -Dkeycloak.profile.feature.upload_scripts=enabled"
-
-- name: wait for keycloak to return
-  command: oc rollout -n labs-infra status --timeout=1m -w deployment/keycloak
-  register: cmd_res
-  retries: 120
-  delay: 10
-  until: cmd_res.rc == 0
-
 - name: get keycloak pod
   k8s_facts:
     api_version: v1
@@ -150,6 +140,14 @@
   retries: 200
   delay: 10
   until: r_stack_is.resources | list | length == 1
+
+- name: create clusterrole che-sa
+  shell: |
+    oc create clusterrole che-sa --verb=create --resource=projectrequests.project.openshift.io
+
+- name: add policy to che-sa
+  shell: |
+    oc adm policy add-cluster-role-to-user che-sa -z che -n labs-infra
 
 - name: import stack image
   shell: |

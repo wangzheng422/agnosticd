@@ -1,0 +1,15 @@
+---
+- name: Step 004 - Software
+  hosts: bastions
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Debug ocp4-cluster software playbook
+      debug:
+        msg: "ocp4-cluster Software playbook"
+
+- name: Ensure SAP software specific tasks are configured
+  import_playbook: sap_software.yml
+  when: cloud_provider is match("osp")
+
+

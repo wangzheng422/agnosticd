@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: datagrid
+  namespace: user{{ item }}
+spec:
+  channel: 8.0.x
+  installPlanApproval: Manual
+  name: datagrid
+  source: redhat-operators-snapshot-dil
+  sourceNamespace: user{{ item }}
+  startingCSV: datagrid-operator.v{{ csv_version }}
