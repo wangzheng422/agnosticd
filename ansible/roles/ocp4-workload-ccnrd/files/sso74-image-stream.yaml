@@ -27,4 +27,4 @@ spec:
       type: Local
     from:
       kind: DockerImage
-      name: {{ wzh_registry_server }}/registry.redhat.io/rh-sso-7/sso74-openshift-rhel8:7.4
+      name: registry.redhat.io/rh-sso-7/sso74-openshift-rhel8:7.4

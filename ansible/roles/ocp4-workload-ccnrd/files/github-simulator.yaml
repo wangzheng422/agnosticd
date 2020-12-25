@@ -52,7 +52,7 @@ spec:
       containers:
         - name: etherpad
           image: >- 
-            {{ wzh_registry_server }}/docker.io/gogs/gogs:latest
+            docker.io/gogs/gogs:latest
           env:
             - name: key
               value: value
