@@ -11,4 +11,4 @@ spec:
       from:
         kind: DockerImage
         name: >-
-          registry.access.redhat.com/ubi8/openjdk-11
+          {{ wzh_registry_server }}/ubi8/openjdk-11

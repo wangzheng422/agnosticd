@@ -14,7 +14,7 @@ spec:
       version: "2.4"
     from:
       kind: DockerImage
-      name: quay.io/openshiftlabs/cloudnative-workspaces-quarkus:2.4
+      name: {{ wzh_registry_server }}/openshiftlabs/cloudnative-workspaces-quarkus:2.4
     name: "2.4"
   - annotations:
       description: Quarkus stack for Java and CodeReady Workspaces on OCP 4.6
@@ -24,7 +24,7 @@ spec:
       version: "2.4.1"
     from:
       kind: DockerImage
-      name: quay.io/openshiftlabs/cloudnative-workspaces-quarkus:2.4.1
+      name: {{ wzh_registry_server }}/openshiftlabs/cloudnative-workspaces-quarkus:2.4.1
     name: "2.4.1"
   - annotations:
       description: Quarkus stack for Java and CodeReady Workspaces on OCP 4.6
@@ -34,5 +34,5 @@ spec:
       version: "2.4.1-wzh"
     from:
       kind: DockerImage
-      name: docker.io/wangzheng422/cloudnative-workspaces-quarkus:2.4.1-wzh
+      name: {{ wzh_registry_server }}/wangzheng422/cloudnative-workspaces-quarkus:2.4.1-wzh
     name: "2.4.1-wzh"

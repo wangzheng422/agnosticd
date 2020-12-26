@@ -11,4 +11,4 @@ spec:
       from:
         kind: DockerImage
         name: >-
-          quay.io/quarkus/ubi-quarkus-native-binary-s2i:1.0
+          {{ wzh_registry_server }}/quarkus/ubi-quarkus-native-binary-s2i:1.0

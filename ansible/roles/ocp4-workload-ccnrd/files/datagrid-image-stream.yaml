@@ -9,4 +9,4 @@ spec:
       from:
         kind: DockerImage
         name: >-
-          docker.io/jboss/infinispan-server:10.0.0.Beta3
+          {{ wzh_registry_server }}/jboss/infinispan-server:10.0.0.Beta3

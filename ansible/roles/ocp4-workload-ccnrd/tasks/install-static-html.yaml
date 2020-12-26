@@ -9,7 +9,7 @@
 - name: deploy static-html
   when: r_static_html.resources | list | length == 0
   shell: >
-    oc -n labs-infra new-app docker.io/wangzheng422/cloudnative-workspaces-quarkus:static-html-2020-07-15-0937 --name=static-html
+    oc -n labs-infra new-app {{ wzh_registry_server }}/wangzheng422/cloudnative-workspaces-quarkus:static-html-2020-07-15-0937 --name=static-html
     
 - name: create the Route maxcdn.bootstrapcdn.com for static-html
   when: r_static_html.resources | list | length == 0

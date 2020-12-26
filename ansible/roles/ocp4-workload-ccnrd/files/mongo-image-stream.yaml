@@ -9,7 +9,7 @@ spec:
       from:
         kind: DockerImage
         name: >-
-          docker.io/library/mongo:4.0
+          {{ wzh_registry_server }}/library/mongo:4.0
 
 
 
