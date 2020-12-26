@@ -60,27 +60,15 @@
     users: "{{ users | default([]) + ['user'+item | string] }}"
   loop: "{{ range(1,((num_users | int) + 1)) | list }}"
 
-- name: remove the knative service
-  shell: >
-    oc delete -n {{ item }}-cloudnativeapps service.serving.knative.dev --all
-  with_list: "{{ users }}"
-  ignore_errors: yes
+# - name: remove the knative service
+#   shell: >
+#     oc delete -n {{ item }}-cloudnativeapps service.serving.knative.dev --all
+#   with_list: "{{ users }}"
+#   ignore_errors: yes
 
 - name: remove the user Projects
   shell: >
     oc delete project {{ item }}-inventory {{ item }}-catalog 
-  with_list: "{{ users }}"
-  ignore_errors: yes
-
-- name: remove the user Projects
-  shell: >
-    oc delete project {{ item }}-cloudnativeapps {{ item }}-cloudnative-pipeline {{ item }}-istio-system {{ item }}-bookinfo
-  with_list: "{{ users }}"
-  ignore_errors: yes
-
-- name: remove the user Projects
-  shell: >
-    oc delete project {{ item }}-inventory {{ item }}-catalog {{ item }}-cloudnativeapps {{ item }}-cloudnative-pipeline {{ item }}-istio-system {{ item }}-bookinfo {{ item }}-che
   with_list: "{{ users }}"
   ignore_errors: yes
 
