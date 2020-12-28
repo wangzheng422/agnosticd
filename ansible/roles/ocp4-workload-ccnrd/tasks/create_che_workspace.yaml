@@ -13,6 +13,11 @@
     status_code: 200
   register: user_token
 
+- name: create cheplugin-meta.yaml in web server path
+  template:
+    src: ../template/cheplugin-meta.yaml.j2 
+    dest: /var/www/html/ccn/cheplugin-meta.yaml 
+
 - name: Create workspace for {{ user }} from devfile
   uri:
     url: "https://codeready-labs-infra.{{ route_subdomain }}/api/workspace/devfile?start-after-create=true&namespace={{ user }}"
