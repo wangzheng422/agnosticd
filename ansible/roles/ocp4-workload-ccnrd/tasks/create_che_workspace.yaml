@@ -15,7 +15,7 @@
 
 - name: create cheplugin-meta.yaml in web server path
   template:
-    src: ../template/cheplugin-meta.yaml.j2 
+    src: ../templates/cheplugin-meta.yaml.j2 
     dest: /var/www/html/ccn/cheplugin-meta.yaml 
 
 - name: Create workspace for {{ user }} from devfile

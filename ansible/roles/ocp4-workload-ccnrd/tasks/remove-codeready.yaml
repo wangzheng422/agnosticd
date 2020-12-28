@@ -1,28 +1,32 @@
 ---
-
+- name: remove clusterrole che-sa
+  shell: |
+    oc delete clusterrole che-sa 
+  ignore_errors: yes
+  
 # deploy codeready CR
-- name: remove CR for CodeReady
-  k8s:
-    state: absent
-    merge_type:
-    - strategic-merge
-    - merge
-    definition: "{{ lookup('file', item ) | from_yaml }}"
-  loop:
-  - ./files/codeready_cr.yaml
+# - name: remove CR for CodeReady
+#   k8s:
+#     state: absent
+#     merge_type:
+#     - strategic-merge
+#     - merge
+#     definition: "{{ lookup('file', item ) | from_yaml }}"
+#   loop:
+#   - ./files/codeready_cr.yaml
 
 
 # deploy codeready operator
-- name: remove operator subscription for CodeReady
-  k8s:
-    state: absent
-    merge_type:
-    - strategic-merge
-    - merge
-    definition: "{{ lookup('file', item ) | from_yaml }}"
-  loop:
-  - ./files/codeready_operatorgroup.yaml
-  - ./files/codeready_subscription.yaml
+# - name: remove operator subscription for CodeReady
+#   k8s:
+#     state: absent
+#     merge_type:
+#     - strategic-merge
+#     - merge
+#     definition: "{{ lookup('file', item ) | from_yaml }}"
+#   loop:
+#   - ./files/codeready_operatorgroup.yaml
+#   - ./files/codeready_subscription.yaml
 
 # wait for CRD to be a thing
 # - name: Wait for CodeReady CRD to be ready
@@ -34,7 +38,6 @@
 #   retries: 200
 #   delay: 10
 #   until: r_codeready_crd.resources | list | length == 0
-
 
 
 # # wait for che to be up

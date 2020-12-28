@@ -38,8 +38,8 @@
 # - name: Remove jaeger
 #   include_tasks: remove-jaeger.yaml
 
-# - name: Remove codeready
-#   include_tasks: remove-codeready.yaml
+- name: Remove codeready
+  include_tasks: remove-codeready.yaml
 
 # - name: Remove amqstreams
 #   include_tasks: remove-amqstreams.yaml
@@ -68,7 +68,7 @@
 
 - name: remove the user Projects
   shell: >
-    oc delete project {{ item }}-inventory {{ item }}-catalog {{ item }}-bookinfo 
+    oc delete project {{ item }}-inventory {{ item }}-catalog {{ item }}-bookinfo  {{ item }}-che
   with_list: "{{ users }}"
   ignore_errors: yes
 
