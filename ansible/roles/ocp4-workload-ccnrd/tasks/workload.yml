@@ -68,6 +68,13 @@
     definition: "{{ lookup('template', item ) | from_yaml }}"
   loop:
   - ./files/sso74-image-stream.yaml
+  - ./files/openshiftlab-workshop-image-stream.yaml
+
+- name: import image-stream in openshift namespace
+  command: oc import-image -n --all openshift {{ item }}
+  with_items:
+    - "ccn-sso74-openshift-rhel8"
+    - "workshopper"
 
 - name: create inventory and catalog user projects
   when: ("m1" in modules or "m2" in modules or "m3" in modules)

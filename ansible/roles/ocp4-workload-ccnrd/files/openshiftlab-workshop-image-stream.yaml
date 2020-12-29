@@ -1,0 +1,11 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: workshopper
+spec:
+  tags:
+    - name: '1.0'
+      from:
+        kind: DockerImage
+        name: >-
+          {{ wzh_registry_server }}/openshiftlabs/workshopper:1.0

@@ -1,7 +1,7 @@
 kind: ImageStream
 apiVersion: v1
 metadata:
-  name: sso74-openshift-rhel8
+  name: ccn-sso74-openshift-rhel8
   annotations:
     description: Red Hat Single Sign-On 7.4 on OpenJDK
     openshift.io/display-name: Red Hat Single Sign-On 7.4 on OpenJDK
