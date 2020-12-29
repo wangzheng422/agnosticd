@@ -71,7 +71,7 @@
   - ./files/openshiftlab-workshop-image-stream.yaml
 
 - name: import image-stream in openshift namespace
-  command: oc import-image -n --all openshift {{ item }}
+  command: oc import-image -n openshift --all {{ item }}
   with_items:
     - "ccn-sso74-openshift-rhel8"
     - "workshopper"
