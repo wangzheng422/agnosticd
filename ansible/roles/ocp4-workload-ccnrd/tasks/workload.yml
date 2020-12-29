@@ -67,14 +67,26 @@
     - merge
     definition: "{{ lookup('template', item ) | from_yaml }}"
   loop:
-  - ./files/sso74-image-stream.yaml
-  - ./files/openshiftlab-workshop-image-stream.yaml
+    - ./files/sso74-image-stream.yaml
+    - ./files/workshopper-image-stream.yaml
+    - ./files/username-distribution-image-stream.yaml
+    - ./files/stack_imagestream.yaml
 
 - name: import image-stream in openshift namespace
   command: oc import-image -n openshift --all {{ item }}
   with_items:
     - "ccn-sso74-openshift-rhel8"
     - "workshopper"
+    - "username-distribution"
+    # - "quarkus-stack"
+
+- name: import quarkus-stack image-stream in openshift namespace
+  command: oc import-image -n openshift quarkus-stack:{{ item }}
+  with_items:
+    - "2.4"
+    - "2.4.1"
+    - "2.4.1-wzh"
+    - "static-html-2020-07-15-0937"
 
 - name: create inventory and catalog user projects
   when: ("m1" in modules or "m2" in modules or "m3" in modules)

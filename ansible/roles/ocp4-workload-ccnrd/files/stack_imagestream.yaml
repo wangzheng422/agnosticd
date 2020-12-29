@@ -36,3 +36,8 @@ spec:
       kind: DockerImage
       name: {{ wzh_registry_server }}/wangzheng422/cloudnative-workspaces-quarkus:2.4.1-wzh
     name: "2.4.1-wzh"
+  - from:
+      kind: DockerImage
+      name: {{ wzh_registry_server }}/wangzheng422/cloudnative-workspaces-quarkus:static-html-2020-07-15-0937
+    name: "static-html-2020-07-15-0937"
+

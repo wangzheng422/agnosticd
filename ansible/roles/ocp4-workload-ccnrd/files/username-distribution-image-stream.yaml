@@ -1,0 +1,11 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: username-distribution
+spec:
+  tags:
+    - name: '1.4'
+      from:
+        kind: DockerImage
+        name: >-
+          {{ wzh_registry_server }}/openshiftlabs/username-distribution:1.4

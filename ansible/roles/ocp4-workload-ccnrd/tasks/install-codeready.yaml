@@ -149,9 +149,9 @@
   shell: |
     oc adm policy add-cluster-role-to-user che-sa -z che -n labs-infra
 
-- name: import stack image
-  shell: |
-    oc import-image --all quarkus-stack -n openshift
+# - name: import stack image
+#   shell: |
+#     oc import-image --all quarkus-stack -n openshift
 
 - name: Pre-create and warm user workspaces
   include_tasks: create_che_workspace.yaml
