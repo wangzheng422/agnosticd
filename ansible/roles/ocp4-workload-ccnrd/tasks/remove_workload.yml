@@ -68,7 +68,7 @@
 
 - name: remove the user Projects
   shell: >
-    oc delete project {{ item }}-inventory {{ item }}-catalog {{ item }}-bookinfo  {{ item }}-che
+    oc delete project {{ item }}-inventory {{ item }}-catalog {{ item }}-bookinfo  {{ item }}-che {{ item }}-coolstore-dev  {{ item }}-coolstore-prod  {{ item }}-monitoring
   with_list: "{{ users }}"
   ignore_errors: yes
 
